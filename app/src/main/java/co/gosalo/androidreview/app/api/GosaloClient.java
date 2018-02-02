@@ -1,4 +1,4 @@
-package co.gosalo.androidreview.api;
+package co.gosalo.androidreview.app.api;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

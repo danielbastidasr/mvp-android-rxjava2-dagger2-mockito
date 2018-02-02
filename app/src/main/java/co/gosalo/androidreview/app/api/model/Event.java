@@ -1,4 +1,4 @@
-package co.gosalo.androidreview.api.model;
+package co.gosalo.androidreview.app.api.model;
 
 public class Event {
 

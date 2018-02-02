@@ -1,11 +1,11 @@
-package co.gosalo.androidreview.view.holder;
+package co.gosalo.androidreview.main.mvp.view.holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import co.gosalo.androidreview.R;
-import co.gosalo.androidreview.api.model.Event;
+import co.gosalo.androidreview.app.api.model.Event;
 
 
 public class EventViewHolder extends RecyclerView.ViewHolder {

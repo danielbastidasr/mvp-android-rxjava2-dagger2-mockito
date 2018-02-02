@@ -1,8 +1,8 @@
-package co.gosalo.androidreview.api;
+package co.gosalo.androidreview.app.api;
 
 import java.util.List;
 
-import co.gosalo.androidreview.api.model.Event;
+import co.gosalo.androidreview.app.api.model.Event;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
