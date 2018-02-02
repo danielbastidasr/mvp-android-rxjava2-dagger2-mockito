@@ -2,14 +2,11 @@ package co.gosalo.androidreview.main.mvp;
 
 import android.util.Log;
 
-import java.util.List;
-
-import co.gosalo.androidreview.app.api.PagedResponseBody;
-import co.gosalo.androidreview.app.api.model.Event;
 import co.gosalo.androidreview.main.mvp.view.MainActivityView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 
@@ -18,7 +15,7 @@ public class MainPresenter {
     private final MainModel model;
 
 
-    private Call<PagedResponseBody<List<Event>>> callback;
+    private Disposable disposable;
 
     public MainPresenter(MainActivityView view, MainModel model) {
         this.view = view;
@@ -27,30 +24,30 @@ public class MainPresenter {
 
     public void onCreate(){
         view.showLoading(true);
-        callback = model.getListEvents();
-
-        callback.enqueue(new Callback<PagedResponseBody<List<Event>>>() {
-            @Override
-            public void onResponse(Call<PagedResponseBody<List<Event>>> call, Response<PagedResponseBody<List<Event>>> response) {
-
-                view.showLoading(false);
-
-                view.setUpRecyclerView(response.body().getContent());
-                Log.i("WORKED", "Gosalo call success");
 
 
-            }
+        disposable = model.getListEvents()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    listPagedResponseBody -> {
+                        view.showLoading(false);
+                        view.setUpRecyclerView(listPagedResponseBody.getContent());
 
-            @Override
-            public void onFailure(Call<PagedResponseBody<List<Event>>> call, Throwable t) {
-                Log.i("DIDNTWORK", "Gosalo call failed");
-            }
-        });
+                    },
+                    err ->{
+                        view.showLoading(false);
+                        Log.d("ERROR", "There was an error with getEvents on subscribe ");
+                    }
+                );
+
+
 
     }
 
     public void onDestroy(){
-        callback.cancel();
+
+        disposable.dispose();
     }
 
 

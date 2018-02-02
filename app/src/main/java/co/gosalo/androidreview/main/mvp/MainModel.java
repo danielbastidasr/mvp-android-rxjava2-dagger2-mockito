@@ -8,7 +8,7 @@ import java.util.List;
 import co.gosalo.androidreview.app.api.GosaloService;
 import co.gosalo.androidreview.app.api.PagedResponseBody;
 import co.gosalo.androidreview.app.api.model.Event;
-import retrofit2.Call;
+import io.reactivex.Observable;
 
 
 
@@ -23,7 +23,7 @@ public class MainModel {
     }
 
 
-    public Call<PagedResponseBody<List<Event>>> getListEvents(){
+    public Observable<PagedResponseBody<List<Event>>> getListEvents(){
          return gosaloService.getEvents();
     }
 
