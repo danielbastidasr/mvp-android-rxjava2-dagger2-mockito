@@ -1,4 +1,4 @@
-package co.gosalo.androidreview.main;
+package co.gosalo.androidreview.activities.main;
 
 import javax.inject.Scope;
 

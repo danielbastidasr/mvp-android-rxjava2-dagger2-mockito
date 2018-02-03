@@ -1,4 +1,4 @@
-package co.gosalo.androidreview.main.mvp.view;
+package co.gosalo.androidreview.activities.main.mvp.view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.gosalo.androidreview.R;
 import co.gosalo.androidreview.app.api.model.Event;
-import co.gosalo.androidreview.main.mvp.view.adapter.EventAdapter;
+import co.gosalo.androidreview.activities.main.mvp.view.adapter.EventAdapter;
 
 
 
@@ -22,6 +22,7 @@ import co.gosalo.androidreview.main.mvp.view.adapter.EventAdapter;
 public class MainActivityView extends FrameLayout {
 
     private final ProgressDialog progressDialog = new ProgressDialog(getContext());
+    private Activity activity;
 
     @BindView(R.id.reciclerView)
     RecyclerView recyclerView;
@@ -29,7 +30,9 @@ public class MainActivityView extends FrameLayout {
     public MainActivityView(Activity activity) {
         super(activity);
 
-        inflate(getContext(),R.layout.activity_main,this);
+        this.activity = activity;
+
+        inflate(this.activity,R.layout.activity_main,this);
         ButterKnife.bind(this);
 
         progressDialog.setMessage("Looking for Events");
@@ -46,7 +49,7 @@ public class MainActivityView extends FrameLayout {
 
     public void setUpRecyclerView(List< Event> events){
         //          CREATE AN ADAPTER WHEN WE THE LIST
-        EventAdapter eventAdapter = new EventAdapter(events);
+        EventAdapter eventAdapter = new EventAdapter(events, activity);
         recyclerView.setAdapter(eventAdapter);
 
     }

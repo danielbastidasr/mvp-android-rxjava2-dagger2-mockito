@@ -1,4 +1,4 @@
-package co.gosalo.androidreview.main.mvp;
+package co.gosalo.androidreview.activities.main.mvp;
 
 import android.app.Activity;
 

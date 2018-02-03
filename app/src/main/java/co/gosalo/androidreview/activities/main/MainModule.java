@@ -1,11 +1,11 @@
-package co.gosalo.androidreview.main;
+package co.gosalo.androidreview.activities.main;
 
 import android.app.Activity;
 
 import co.gosalo.androidreview.app.api.GosaloService;
-import co.gosalo.androidreview.main.mvp.MainModel;
-import co.gosalo.androidreview.main.mvp.MainPresenter;
-import co.gosalo.androidreview.main.mvp.view.MainActivityView;
+import co.gosalo.androidreview.activities.main.mvp.MainModel;
+import co.gosalo.androidreview.activities.main.mvp.MainPresenter;
+import co.gosalo.androidreview.activities.main.mvp.view.MainActivityView;
 import dagger.Module;
 import dagger.Provides;
 

@@ -1,8 +1,8 @@
-package co.gosalo.androidreview.main.mvp;
+package co.gosalo.androidreview.activities.main.mvp;
 
 import android.util.Log;
 
-import co.gosalo.androidreview.main.mvp.view.MainActivityView;
+import co.gosalo.androidreview.activities.main.mvp.view.MainActivityView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

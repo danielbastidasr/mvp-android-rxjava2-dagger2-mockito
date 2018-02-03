@@ -1,4 +1,4 @@
-package co.gosalo.androidreview.main.mvp.view.holder;
+package co.gosalo.androidreview.activities.main.mvp.view.holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
