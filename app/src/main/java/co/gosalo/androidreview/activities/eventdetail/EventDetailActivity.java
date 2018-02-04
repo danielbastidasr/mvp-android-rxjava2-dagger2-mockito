@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import javax.inject.Inject;
 
+import co.gosalo.androidreview.activities.eventdetail.mvp.EventDetailPresenter;
 import co.gosalo.androidreview.app.GosaloApp;
 import co.gosalo.androidreview.app.api.model.Event;
 import co.gosalo.androidreview.activities.eventdetail.mvp.EventDetailView;
@@ -17,6 +18,10 @@ public class EventDetailActivity extends AppCompatActivity {
 
     @Inject
     EventDetailView activityView;
+
+    @Inject
+    EventDetailPresenter presenter;
+
 
     public static void start(Context context, Event event) {
 
@@ -35,6 +40,15 @@ public class EventDetailActivity extends AppCompatActivity {
 
         setContentView(activityView);
 
+        presenter.onCreate();
 
+
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 }

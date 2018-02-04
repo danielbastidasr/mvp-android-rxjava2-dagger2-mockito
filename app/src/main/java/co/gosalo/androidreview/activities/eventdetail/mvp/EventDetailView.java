@@ -7,8 +7,6 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.gosalo.androidreview.R;
-import co.gosalo.androidreview.app.api.model.Event;
-import co.gosalo.androidreview.activities.eventdetail.EventDetailActivity;
 
 
 public class EventDetailView extends FrameLayout {
@@ -25,13 +23,12 @@ public class EventDetailView extends FrameLayout {
         inflate(this.activity, R.layout.activity_event_detail,this);
         ButterKnife.bind(this);
 
-
-        Event event = activity.getIntent().getParcelableExtra(EventDetailActivity.INTENT_DATA);
-
-        eventName.setText(event.getTitle());
-
-
     }
+
+    void setEventName(String eventName){
+        this.eventName.setText(eventName);
+    }
+
 
 
 }

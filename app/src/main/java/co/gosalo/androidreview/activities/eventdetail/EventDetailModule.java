@@ -2,6 +2,8 @@ package co.gosalo.androidreview.activities.eventdetail;
 
 import android.app.Activity;
 
+import co.gosalo.androidreview.activities.eventdetail.mvp.EventDetailModel;
+import co.gosalo.androidreview.activities.eventdetail.mvp.EventDetailPresenter;
 import co.gosalo.androidreview.activities.eventdetail.mvp.EventDetailView;
 import dagger.Module;
 import dagger.Provides;
@@ -21,17 +23,17 @@ public class EventDetailModule {
     public EventDetailView view(){
         return new EventDetailView(activity);
     }
-/*
+
     @Provides
     @EventDetailScope
     public EventDetailModel model(){
-        return new EventDetailModel(activity,gosaloService);
+        return new EventDetailModel(activity);
     }
 
     @Provides
     @EventDetailScope
-    public EventDetailPresenter mainPresenter(EventDetailView view, EventDetailModel model){
-        return new MainPresenter(view,model);
+    public EventDetailPresenter mainPresenter(EventDetailView view,EventDetailModel model){
+        return new EventDetailPresenter(view,model);
     }
-*/
+
 }
