@@ -15,6 +15,7 @@ import co.gosalo.androidreview.activities.eventdetail.mvp.EventDetailView;
 public class EventDetailActivity extends AppCompatActivity {
 
     public static final String INTENT_DATA = "event";
+    private static Event event;
 
     @Inject
     EventDetailView activityView;
@@ -33,9 +34,11 @@ public class EventDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        event = this.getIntent().getParcelableExtra(EventDetailActivity.INTENT_DATA);
+
         DaggerEventDetailComponent.builder()
                 .appComponent(GosaloApp.get(this).component())
-                .eventDetailModule(new EventDetailModule(this))
+                .eventDetailModule(new EventDetailModule(this,event))
                 .build().inject(this);
 
         setContentView(activityView);

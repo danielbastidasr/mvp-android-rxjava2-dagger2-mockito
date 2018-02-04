@@ -5,6 +5,7 @@ import android.app.Activity;
 import co.gosalo.androidreview.activities.eventdetail.mvp.EventDetailModel;
 import co.gosalo.androidreview.activities.eventdetail.mvp.EventDetailPresenter;
 import co.gosalo.androidreview.activities.eventdetail.mvp.EventDetailView;
+import co.gosalo.androidreview.app.api.model.Event;
 import dagger.Module;
 import dagger.Provides;
 
@@ -13,9 +14,11 @@ import dagger.Provides;
 public class EventDetailModule {
 
     private final Activity activity;
+    private final Event event;
 
-    public EventDetailModule(Activity activity) {
+    public EventDetailModule(Activity activity, Event event) {
         this.activity = activity;
+        this.event = event;
     }
 
     @Provides
@@ -27,7 +30,7 @@ public class EventDetailModule {
     @Provides
     @EventDetailScope
     public EventDetailModel model(){
-        return new EventDetailModel(activity);
+        return new EventDetailModel(activity,event);
     }
 
     @Provides
