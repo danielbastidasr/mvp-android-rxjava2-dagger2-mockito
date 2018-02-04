@@ -16,9 +16,7 @@ public class EventDetailPresenter {
 
     public void onCreate(){
         disposable = model.getEvent().subscribe(
-                event -> {
-                    view.setEventName(event.getTitle());
-                }
+                event -> view.setEvent(event)
         );
     }
 

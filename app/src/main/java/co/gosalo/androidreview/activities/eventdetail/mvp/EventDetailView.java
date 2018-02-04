@@ -7,6 +7,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.gosalo.androidreview.R;
+import co.gosalo.androidreview.app.api.model.Event;
 
 
 public class EventDetailView extends FrameLayout {
@@ -14,6 +15,9 @@ public class EventDetailView extends FrameLayout {
 
     @BindView(R.id.event_detail_name)
     TextView eventName;
+
+    @BindView(R.id.event_detail_venue)
+    TextView eventVenue;
 
     public EventDetailView(Activity activity) {
         super(activity);
@@ -25,8 +29,9 @@ public class EventDetailView extends FrameLayout {
 
     }
 
-    void setEventName(String eventName){
-        this.eventName.setText(eventName);
+    void setEvent(Event event){
+        this.eventName.setText(event.getTitle());
+        this.eventVenue.setText(event.getVenue());
     }
 
 

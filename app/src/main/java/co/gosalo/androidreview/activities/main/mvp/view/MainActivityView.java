@@ -1,7 +1,6 @@
 package co.gosalo.androidreview.activities.main.mvp.view;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +12,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.gosalo.androidreview.R;
+import co.gosalo.androidreview.activities.main.MainActivity;
 import co.gosalo.androidreview.app.api.model.Event;
 import co.gosalo.androidreview.activities.main.mvp.view.adapter.EventAdapter;
 
@@ -22,12 +22,12 @@ import co.gosalo.androidreview.activities.main.mvp.view.adapter.EventAdapter;
 public class MainActivityView extends FrameLayout {
 
     private final ProgressDialog progressDialog = new ProgressDialog(getContext());
-    private Activity activity;
+    private MainActivity activity;
 
     @BindView(R.id.reciclerView)
     RecyclerView recyclerView;
 
-    public MainActivityView(Activity activity) {
+    public MainActivityView(MainActivity activity) {
         super(activity);
 
         this.activity = activity;
@@ -63,4 +63,6 @@ public class MainActivityView extends FrameLayout {
             progressDialog.dismiss();
         }
     }
+
+
 }

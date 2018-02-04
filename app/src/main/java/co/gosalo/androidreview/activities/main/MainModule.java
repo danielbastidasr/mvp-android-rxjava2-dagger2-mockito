@@ -1,6 +1,5 @@
 package co.gosalo.androidreview.activities.main;
 
-import android.app.Activity;
 
 import co.gosalo.androidreview.app.api.GosaloService;
 import co.gosalo.androidreview.activities.main.mvp.MainModel;
@@ -12,9 +11,9 @@ import dagger.Provides;
 
 @Module
 public class MainModule {
-    private final Activity activity;
+    private final MainActivity activity;
 
-    public MainModule(Activity activity) {
+    public MainModule(MainActivity activity) {
         this.activity = activity;
     }
 

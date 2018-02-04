@@ -1,6 +1,6 @@
 package co.gosalo.androidreview.activities.main.mvp.view.adapter;
 
-import android.app.Activity;
+
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import co.gosalo.androidreview.R;
+import co.gosalo.androidreview.activities.main.MainActivity;
 import co.gosalo.androidreview.app.api.model.Event;
-import co.gosalo.androidreview.activities.eventdetail.EventDetailActivity;
 import co.gosalo.androidreview.activities.main.mvp.view.holder.EventViewHolder;
 
 
@@ -20,9 +20,9 @@ public class EventAdapter  extends RecyclerView.Adapter<EventViewHolder>{
 
     private List<Event> events;
 
-    private Activity activity;
+    private MainActivity activity;
 
-    public EventAdapter(List<Event> events, Activity activity) {
+    public EventAdapter(List<Event> events, MainActivity activity) {
         this.events = events;
         this.activity = activity;
     }
@@ -40,7 +40,7 @@ public class EventAdapter  extends RecyclerView.Adapter<EventViewHolder>{
         holder.updateUI(event);
 
         holder.itemView.setOnClickListener(
-            view -> EventDetailActivity.start(activity,event)
+            view ->activity.startDetailActivity(event)
         );
     }
 
