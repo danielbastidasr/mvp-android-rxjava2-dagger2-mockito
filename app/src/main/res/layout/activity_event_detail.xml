@@ -21,6 +21,8 @@
             android:textStyle="bold"
             />
 
+
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/event_detail_venue"
             android:layout_width="match_parent"
@@ -29,6 +31,34 @@
             android:gravity="center"
             android:textSize="20dp"
             android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            >
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/event_detail_tickets_picker"
+                />
+            <Button
+                android:id="@+id/event_detail_buy_button"
+                android:layout_width="200dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:text="Buy Tickets"
+                android:textStyle="bold"
+                android:clickable="false"
+                />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
