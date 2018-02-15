@@ -8,6 +8,10 @@ public class Event implements Parcelable{
     private String title;
     private String venue;
 
+    public  Event(String title, String venue){
+        this.title = title;
+        this.venue = venue;
+    }
     protected Event(Parcel in) {
         title = in.readString();
         venue = in.readString();

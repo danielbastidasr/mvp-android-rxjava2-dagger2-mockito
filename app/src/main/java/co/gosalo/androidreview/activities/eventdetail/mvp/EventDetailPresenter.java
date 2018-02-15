@@ -3,13 +3,15 @@ package co.gosalo.androidreview.activities.eventdetail.mvp;
 
 import android.util.Log;
 
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public class EventDetailPresenter {
     private final EventDetailView view;
     private final EventDetailModel model;
 
-    private Disposable disposable, disposable2;
+    private final CompositeDisposable disposables = new CompositeDisposable();
+
 
     public EventDetailPresenter(EventDetailView view, EventDetailModel model) {
         this.view = view;
@@ -18,11 +20,29 @@ public class EventDetailPresenter {
 
     public void onCreate(){
 
-        disposable = model.getEvent().subscribe(
+        disposables.add(getEvent());
+
+        disposables.add(observeOnButtonAndSelection());
+    }
+
+
+
+    public void onDestroy(){
+
+        disposables.clear();
+
+    }
+
+
+
+    private Disposable getEvent(){
+        return model.getEvent().subscribe(
                 event -> view.setEvent(event)
         );
+    }
 
-        disposable2 = view.observeOnTicketPick()
+    private Disposable observeOnButtonAndSelection(){
+        return view.observeOnTicketPick()
                 .doOnNext(tickets -> {
 
                     view.buyButton.setClickable(true);
@@ -30,22 +50,14 @@ public class EventDetailPresenter {
 
                 })
                 .switchMap(
-                    ticketNumber -> view.observeButton().map(
-                            __-> {
-                                return ticketNumber;
-                            }
-                    )
+                        ticketNumber -> view.observeButton().map(
+                                __-> {
+                                    return ticketNumber;
+                                }
+                        )
                 )
                 .subscribe(
-                    ticketsNumber-> Log.d("Clicked", "Picked and Clicked: "+ticketsNumber)
+                        ticketsNumber-> Log.d("Clicked", "Picked and Clicked: "+ticketsNumber)
                 );
-
-    }
-
-
-    public void onDestroy(){
-        disposable.dispose();
-        disposable2.dispose();
-
     }
 }

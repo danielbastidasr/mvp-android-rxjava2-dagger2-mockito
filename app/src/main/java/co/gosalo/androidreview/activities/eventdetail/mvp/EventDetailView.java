@@ -45,7 +45,7 @@ public class EventDetailView extends FrameLayout  {
 
     }
 
-    void setEvent(Event event){
+    public void setEvent(Event event){
         this.eventName.setText(event.getTitle());
         this.eventVenue.setText(event.getVenue());
     }
