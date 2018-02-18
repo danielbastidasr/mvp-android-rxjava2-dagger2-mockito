@@ -9,3 +9,5 @@ such as title, venue,... etc.
 ## The second Activity
 
 The second Activity will show us on the console the actual state of the observables that we subscribed on.
+
+
