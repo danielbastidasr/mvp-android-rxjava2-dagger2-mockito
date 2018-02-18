@@ -6,8 +6,9 @@ import co.gosalo.androidreview.activities.main.mvp.view.MainActivityView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
-
+import retrofit2.HttpException;
 
 
 public class MainPresenter {
@@ -30,18 +31,21 @@ public class MainPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(
-                    listPagedResponseBody -> {
-                        view.showLoading(false);
-                        view.setUpRecyclerView(listPagedResponseBody.getContent());
+                        listPagedResponseBody -> view.setUpRecyclerView(listPagedResponseBody.getContent())
+                        ,
+                        err -> {
+                            HttpException exception = (HttpException) err;
 
-                    },
-                    err ->{
-                        view.showLoading(false);
-                        Log.d("ERROR", "There was an error with getEvents on subscribe ");
-                    }
+                            view.emptyList("Couldn't load the events: "+ exception.code()+exception.message());
+                            view.showLoading(false);
+
+                        }
+                        ,
+                        ()-> {
+                            view.showLoading(false);
+                            Log.d("SUBSCRIPTION", "onCompleted: ");
+                        }
                 );
-
-
 
     }
 

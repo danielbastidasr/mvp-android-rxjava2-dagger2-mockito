@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -27,6 +28,9 @@ public class MainActivityView extends FrameLayout {
     @BindView(R.id.reciclerView)
     RecyclerView recyclerView;
 
+    @BindView(R.id.emptyListView)
+    TextView emptyList;
+
     public MainActivityView(MainActivity activity) {
         super(activity);
 
@@ -44,6 +48,7 @@ public class MainActivityView extends FrameLayout {
         recyclerView.setLayoutManager(layoutManager);
         //          WE ADD SOME SEPARATION AMONG THE EVENTS
         recyclerView.addItemDecoration(new EventAdapter.SpaceItems(30));
+
 
     }
 
@@ -64,5 +69,12 @@ public class MainActivityView extends FrameLayout {
         }
     }
 
+    public void emptyList(String errorText){
+        recyclerView.setVisibility(INVISIBLE);
+
+        emptyList.setText(errorText);
+        emptyList.setVisibility(VISIBLE);
+
+    }
 
 }
