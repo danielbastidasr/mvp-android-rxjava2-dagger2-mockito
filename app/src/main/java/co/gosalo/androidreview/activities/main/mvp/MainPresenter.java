@@ -34,9 +34,11 @@ public class MainPresenter {
                         listPagedResponseBody -> view.setUpRecyclerView(listPagedResponseBody.getContent())
                         ,
                         err -> {
-                            HttpException exception = (HttpException) err;
-
-                            view.emptyList("Couldn't load the events: "+ exception.code()+exception.message());
+                            if(err instanceof HttpException){
+                                HttpException exception = (HttpException) err;
+                                view.emptyList("Couldn't load the events: "+ exception.code()+exception.message());
+                            }
+                            else view.emptyList("Couldn't load the events: "+ err.getCause());
                             view.showLoading(false);
 
                         }
