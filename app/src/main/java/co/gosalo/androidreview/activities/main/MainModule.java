@@ -1,7 +1,6 @@
 package co.gosalo.androidreview.activities.main;
 
 
-import co.gosalo.androidreview.app.Navigator;
 import co.gosalo.androidreview.app.api.GosaloService;
 import co.gosalo.androidreview.activities.main.mvp.MainModel;
 import co.gosalo.androidreview.activities.main.mvp.MainPresenter;

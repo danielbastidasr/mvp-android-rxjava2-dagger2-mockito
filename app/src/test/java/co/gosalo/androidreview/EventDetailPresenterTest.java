@@ -34,7 +34,8 @@ public class EventDetailPresenterTest {
         view = Mockito.mock(EventDetailView.class);
         model = Mockito.mock(EventDetailModel.class);
 
-        presenter = new EventDetailPresenter(view,model);
+
+        //presenter = new EventDetailPresenter(view,model);
 
 
     }

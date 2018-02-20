@@ -36,6 +36,13 @@ public class EventAdapter  extends RecyclerView.Adapter<EventViewHolder>{
 
     @Override
     public void onBindViewHolder(EventViewHolder holder, int position) {
+
+        /**INCREMENT LIST WILL FIRE THE API CALL**/
+
+        if (position == getItemCount() - 1) {
+            activity.incrementEventsList();
+        }
+
         final Event event = events.get(position);
         holder.updateUI(event);
 
@@ -49,6 +56,12 @@ public class EventAdapter  extends RecyclerView.Adapter<EventViewHolder>{
         if( this.events == null )
             return 0;
         return this.events.size();
+    }
+
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+        notifyDataSetChanged();
     }
 
     // JUST SEPARATION AMONG THE EVENTS

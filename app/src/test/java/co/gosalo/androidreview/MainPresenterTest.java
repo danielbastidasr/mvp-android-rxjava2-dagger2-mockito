@@ -43,7 +43,8 @@ public class MainPresenterTest {
 
     @Test
     public void onGetEventsNoData(){
-        Mockito.when(mainModel.getListEvents()).thenReturn(Observable.just(mockEvents));
+        //TODO: Create a meaningful test
+        Mockito.when(mainModel.getListEvents(0)).thenReturn(Observable.just(mockEvents));
 
 
         mainPresenter.onCreate();

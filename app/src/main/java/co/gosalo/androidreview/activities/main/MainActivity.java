@@ -6,14 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
-import co.gosalo.androidreview.activities.eventdetail.EventDetailActivity;
 import co.gosalo.androidreview.app.GosaloApp;
 import co.gosalo.androidreview.app.Navigator;
 import co.gosalo.androidreview.app.api.GosaloService;
 import co.gosalo.androidreview.activities.main.mvp.MainPresenter;
 import co.gosalo.androidreview.activities.main.mvp.view.MainActivityView;
 import co.gosalo.androidreview.app.api.model.Event;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     MainPresenter presenter;
 
+
+    public void incrementEventsList() {
+        presenter.incrementPage();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -23,8 +23,8 @@ public class MainModel {
     }
 
 
-    public Observable<PagedResponseBody<List<Event>>> getListEvents(){
-         return gosaloService.getEvents();
+    public Observable<PagedResponseBody<List<Event>>> getListEvents(Integer page){
+         return gosaloService.getEvents(page);
     }
 
 }

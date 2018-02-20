@@ -23,6 +23,7 @@ import co.gosalo.androidreview.activities.main.mvp.view.adapter.EventAdapter;
 public class MainActivityView extends FrameLayout {
 
     private final ProgressDialog progressDialog = new ProgressDialog(getContext());
+    private EventAdapter eventAdapter;
     private MainActivity activity;
 
     @BindView(R.id.reciclerView)
@@ -54,8 +55,12 @@ public class MainActivityView extends FrameLayout {
 
     public void setUpRecyclerView(List< Event> events){
         //          CREATE AN ADAPTER WHEN WE THE LIST
-        EventAdapter eventAdapter = new EventAdapter(events, activity);
-        recyclerView.setAdapter(eventAdapter);
+        if (eventAdapter == null) {
+            eventAdapter = new EventAdapter(events, activity);
+            recyclerView.setAdapter(eventAdapter);
+        } else {
+            eventAdapter.setEvents(events);
+        }
 
     }
 
