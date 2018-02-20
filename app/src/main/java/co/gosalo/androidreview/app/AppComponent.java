@@ -11,8 +11,10 @@ import dagger.Component;
 @Component(modules = {AppModule.class, NetworkModule.class})
 public interface AppComponent {
 
-    Context context();
+    //Context context();
 
     GosaloService gosaloService();
+
+    Navigator navigator();
 
 }

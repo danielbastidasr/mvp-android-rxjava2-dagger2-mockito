@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.eventdetail.EventDetailActivity"></activity>
+        <activity android:name=".activities.selectedtickets.SelectedTicketsActivity"></activity>
     </application>
 
 </manifest>

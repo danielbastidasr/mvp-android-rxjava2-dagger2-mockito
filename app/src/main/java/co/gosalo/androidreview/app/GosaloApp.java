@@ -8,19 +8,21 @@ import android.app.Service;
 public class GosaloApp extends Application {
 
     private static AppComponent appComponent;
-
+    private static Navigator navigator;
 
     public static GosaloApp get(Activity activity) {
        return (GosaloApp) activity.getApplication();
     }
 
-    public static GosaloApp get(Service service) {
-       return (GosaloApp) service.getApplication();
+    public static Navigator getNavigator(){
+        return navigator;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        navigator = new Navigator();
 
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))

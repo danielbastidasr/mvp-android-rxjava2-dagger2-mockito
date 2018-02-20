@@ -13,10 +13,10 @@ import dagger.Provides;
 @Module
 public class EventDetailModule {
 
-    private final Activity activity;
+    private final EventDetailActivity activity;
     private final Event event;
 
-    public EventDetailModule(Activity activity, Event event) {
+    public EventDetailModule(EventDetailActivity activity, Event event) {
         this.activity = activity;
         this.event = event;
     }
@@ -35,8 +35,8 @@ public class EventDetailModule {
 
     @Provides
     @EventDetailScope
-    public EventDetailPresenter mainPresenter(EventDetailView view,EventDetailModel model){
-        return new EventDetailPresenter(view,model);
+    public EventDetailPresenter eventDetailPresenter(EventDetailView view,EventDetailModel model){
+        return new EventDetailPresenter(view,model,activity);
     }
 
 }

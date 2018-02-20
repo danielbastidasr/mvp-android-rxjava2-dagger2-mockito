@@ -1,12 +1,10 @@
 package co.gosalo.androidreview.activities.main.mvp;
 
-import android.util.Log;
-
 import co.gosalo.androidreview.activities.main.mvp.view.MainActivityView;
+
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.HttpException;
 
@@ -45,7 +43,7 @@ public class MainPresenter {
                         ,
                         ()-> {
                             view.showLoading(false);
-                            Log.d("SUBSCRIPTION", "onCompleted: ");
+                            //Log.d("SUBSCRIPTION", "onCompleted: ");
                         }
                 );
 

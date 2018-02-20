@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import co.gosalo.androidreview.activities.eventdetail.EventDetailActivity;
 import co.gosalo.androidreview.app.GosaloApp;
+import co.gosalo.androidreview.app.Navigator;
 import co.gosalo.androidreview.app.api.GosaloService;
 import co.gosalo.androidreview.activities.main.mvp.MainPresenter;
 import co.gosalo.androidreview.activities.main.mvp.view.MainActivityView;
@@ -18,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     GosaloService service;
+
+    @Inject
+    Navigator navigator;
 
 
     @Inject
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
 
         DaggerMainComponent.builder()
@@ -53,6 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void startDetailActivity(Event event){
-        EventDetailActivity.start(this,event);
+        navigator.navigateToEventDetail(this,event);
     }
 }

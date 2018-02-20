@@ -14,12 +14,18 @@ public class AppModule {
 
     public AppModule(Application application) {
         this.context = application.getApplicationContext();
-    }
 
+    }
     @AppScope
     @Provides
     public Context context() {
         return context;
+    }
+
+    @AppScope
+    @Provides
+    public  Navigator navigator(){
+        return new Navigator();
     }
 
 }

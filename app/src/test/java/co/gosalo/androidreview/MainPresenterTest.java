@@ -47,7 +47,10 @@ public class MainPresenterTest {
 
 
         mainPresenter.onCreate();
+
         Mockito.verify(mainView,Mockito.times(1)).showLoading(false);
+        Mockito.verify(mainView,Mockito.times(1)).showLoading(true);
+
         mainPresenter.onDestroy();
     }
 

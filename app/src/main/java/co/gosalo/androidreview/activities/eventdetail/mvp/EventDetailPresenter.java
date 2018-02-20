@@ -3,19 +3,24 @@ package co.gosalo.androidreview.activities.eventdetail.mvp;
 
 import android.util.Log;
 
+
+import co.gosalo.androidreview.activities.eventdetail.EventDetailActivity;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+
 
 public class EventDetailPresenter {
     private final EventDetailView view;
     private final EventDetailModel model;
+    private final EventDetailActivity activity;
 
     private final CompositeDisposable disposables = new CompositeDisposable();
 
 
-    public EventDetailPresenter(EventDetailView view, EventDetailModel model) {
+    public EventDetailPresenter(EventDetailView view, EventDetailModel model, EventDetailActivity activity) {
         this.view = view;
         this.model = model;
+        this.activity = activity;
     }
 
     public void onCreate(){
@@ -57,7 +62,11 @@ public class EventDetailPresenter {
                         )
                 )
                 .subscribe(
-                        ticketsNumber-> Log.d("Clicked", "Picked and Clicked: "+ticketsNumber)
+
+                        ticketsNumber-> {
+                            Log.d("Clicked", "Picked and Clicked: "+ticketsNumber);
+                            this.activity.startSelectedTicketsActivity("Picked and Clicked: "+ticketsNumber);
+                        }
                 );
     }
 }
