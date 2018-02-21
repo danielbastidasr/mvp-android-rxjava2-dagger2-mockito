@@ -74,10 +74,11 @@ public class MainActivityView extends FrameLayout {
         }
     }
 
-    public void emptyList(String errorText){
+    public void emptyList(){
+        /**TODO:Get the error case and display different strings to the user**/
         recyclerView.setVisibility(INVISIBLE);
 
-        emptyList.setText(errorText);
+        emptyList.setText(activity.getString(R.string.error_list_events));
         emptyList.setVisibility(VISIBLE);
 
     }

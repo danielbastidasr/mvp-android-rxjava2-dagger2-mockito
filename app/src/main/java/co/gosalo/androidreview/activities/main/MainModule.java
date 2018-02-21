@@ -28,7 +28,7 @@ public class MainModule {
     @Provides
     @MainScope
     public MainModel model(GosaloService gosaloService){
-        return new MainModel(activity,gosaloService);
+        return new MainModel(gosaloService);
     }
 
     @Provides

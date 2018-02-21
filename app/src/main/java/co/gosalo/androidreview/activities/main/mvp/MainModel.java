@@ -1,7 +1,5 @@
 package co.gosalo.androidreview.activities.main.mvp;
 
-import android.app.Activity;
-
 
 import java.util.List;
 
@@ -14,11 +12,9 @@ import io.reactivex.Observable;
 
 public class MainModel {
 
-    private final Activity activity;
     private final GosaloService gosaloService;
 
-    public MainModel(Activity activity, GosaloService gosaloService) {
-        this.activity = activity;
+    public MainModel(GosaloService gosaloService) {
         this.gosaloService = gosaloService;
     }
 

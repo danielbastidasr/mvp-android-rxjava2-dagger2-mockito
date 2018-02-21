@@ -19,6 +19,7 @@ import io.reactivex.Observable;
 
 public class MainPresenterTest {
 
+
     private MainPresenter mainPresenter;
     private MainActivityView mainView;
     private MainModel mainModel;
@@ -32,23 +33,23 @@ public class MainPresenterTest {
     @Before
     public void setUp()throws Exception {
 
-
         mainView = Mockito.mock(MainActivityView.class);
         mainModel = Mockito.mock(MainModel.class);
 
         mainPresenter = new MainPresenter(mainView,mainModel);
-
-
     }
 
     @Test
-    public void onGetEventsNoData(){
-        //TODO: Create a meaningful test
+    public void onGetEventsNullData(){
+
+        //In Case the data is Null or Connection problem
+
         Mockito.when(mainModel.getListEvents(0)).thenReturn(Observable.just(mockEvents));
-
-
         mainPresenter.onCreate();
 
+        //The following methods should be called
+
+        Mockito.verify(mainView,Mockito.times(1)).emptyList();
         Mockito.verify(mainView,Mockito.times(1)).showLoading(false);
         Mockito.verify(mainView,Mockito.times(1)).showLoading(true);
 

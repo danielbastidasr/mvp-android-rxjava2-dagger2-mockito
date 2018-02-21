@@ -1,6 +1,5 @@
 package co.gosalo.androidreview.activities.eventdetail;
 
-import android.app.Activity;
 
 import co.gosalo.androidreview.activities.eventdetail.mvp.EventDetailModel;
 import co.gosalo.androidreview.activities.eventdetail.mvp.EventDetailPresenter;
@@ -30,7 +29,7 @@ public class EventDetailModule {
     @Provides
     @EventDetailScope
     public EventDetailModel model(){
-        return new EventDetailModel(activity,event);
+        return new EventDetailModel(event);
     }
 
     @Provides

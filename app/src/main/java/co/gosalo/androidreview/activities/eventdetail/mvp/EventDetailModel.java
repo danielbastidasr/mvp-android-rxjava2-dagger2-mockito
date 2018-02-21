@@ -8,11 +8,9 @@ import io.reactivex.Observable;
 
 public class EventDetailModel {
 
-    private final Activity activity;
     private Observable<Event> event;
 
-    public EventDetailModel(Activity activity, Event event) {
-        this.activity = activity;
+    public EventDetailModel( Event event) {
         this.event = Observable.just(event);
     }
     public Observable<Event> getEvent(){
