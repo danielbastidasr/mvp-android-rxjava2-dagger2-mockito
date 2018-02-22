@@ -1,10 +1,14 @@
 package co.gosalo.androidreview;
 
 
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
@@ -16,13 +20,15 @@ import co.gosalo.androidreview.app.api.model.Event;
 import co.gosalo.androidreview.utilities.RxSchedulersOverrideRule;
 import io.reactivex.Observable;
 
-
+@RunWith(MockitoJUnitRunner.class)
 public class MainPresenterTest {
 
+    @Mock
+    private MainActivityView mainView;
+    @Mock
+    private MainModel mainModel;
 
     private MainPresenter mainPresenter;
-    private MainActivityView mainView;
-    private MainModel mainModel;
 
     private PagedResponseBody<List<Event>> mockEvents = new PagedResponseBody<>();
 
@@ -33,28 +39,27 @@ public class MainPresenterTest {
     @Before
     public void setUp()throws Exception {
 
-        mainView = Mockito.mock(MainActivityView.class);
-        mainModel = Mockito.mock(MainModel.class);
-
         mainPresenter = new MainPresenter(mainView,mainModel);
     }
 
     @Test
     public void onGetEventsNullData(){
 
-        //In Case the data is Null or Connection problem
-
+        //Given that there is no network connection or PageResponseBody attributes may be null
         Mockito.when(mainModel.getListEvents(0)).thenReturn(Observable.just(mockEvents));
+
+        //When Presenter Called
         mainPresenter.onCreate();
 
-        //The following methods should be called
-
+        //Then the following methods should be called
+        Mockito.verify(mainView,Mockito.times(1)).showLoading(true);
         Mockito.verify(mainView,Mockito.times(1)).emptyList();
         Mockito.verify(mainView,Mockito.times(1)).showLoading(false);
-        Mockito.verify(mainView,Mockito.times(1)).showLoading(true);
 
+        //At the end we just destroy
         mainPresenter.onDestroy();
     }
+
 
 
 }

@@ -98,7 +98,6 @@ public class MainPresenter {
                             }
 
                             else view.emptyList();
-                            Log.d("RESPONSENULL", "retrieveEvents: ");
                             view.showLoading(false);
                         }
                         ,

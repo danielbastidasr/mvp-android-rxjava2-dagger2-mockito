@@ -31,11 +31,7 @@ public class SelectedTicketsActivity extends AppCompatActivity {
 
         tickets = this.getIntent().getStringExtra(INTENT_DATA);
 
-        DaggerSelectedTicketsComponent.builder()
-                .appComponent(GosaloApp.get(this).component())
-                .selectedTicketsModule(new SelectedTicketsModule(this,tickets))
-                .build().inject(this);
-
+        GosaloApp.createSelectedTicketsComponent(this,tickets).inject(this);
 
         setContentView(activityView);
     }

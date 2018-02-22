@@ -35,10 +35,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
         event = this.getIntent().getParcelableExtra(EventDetailActivity.INTENT_DATA);
 
-        DaggerEventDetailComponent.builder()
-                .appComponent(GosaloApp.get(this).component())
-                .eventDetailModule(new EventDetailModule(this,event))
-                .build().inject(this);
+        GosaloApp.createEventDetailComponent(this,event).inject(this);
 
         setContentView(activityView);
 

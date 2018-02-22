@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
+import co.gosalo.androidreview.app.DaggerAppComponent;
 import co.gosalo.androidreview.app.GosaloApp;
 import co.gosalo.androidreview.app.Navigator;
 import co.gosalo.androidreview.app.api.GosaloService;
@@ -38,11 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-
-        DaggerMainComponent.builder()
-                .appComponent(GosaloApp.get(this).component())
-                .mainModule(new MainModule(this))
-                .build().inject(this);
+        GosaloApp.createMainComponent(this).inject(this);
 
         setContentView(activityView);
 
