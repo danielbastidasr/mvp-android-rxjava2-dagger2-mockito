@@ -1,6 +1,8 @@
 package co.gosalo.androidreview.activities.main.mvp;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +98,7 @@ public class MainPresenter {
                             }
 
                             else view.emptyList();
+                            Log.d("RESPONSENULL", "retrieveEvents: ");
                             view.showLoading(false);
                         }
                         ,

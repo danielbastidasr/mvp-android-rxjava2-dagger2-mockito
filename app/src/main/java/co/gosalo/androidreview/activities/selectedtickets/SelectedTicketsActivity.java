@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
+import co.gosalo.androidreview.activities.selectedtickets.mvp.SelectedTicketsPresenter;
+import co.gosalo.androidreview.activities.selectedtickets.mvp.SelectedTicketsView;
 import co.gosalo.androidreview.app.GosaloApp;
 
 public class SelectedTicketsActivity extends AppCompatActivity {
@@ -18,6 +20,9 @@ public class SelectedTicketsActivity extends AppCompatActivity {
 
     @Inject
     SelectedTicketsView activityView;
+
+    @Inject
+    SelectedTicketsPresenter presenter;
 
 
     @Override
@@ -39,6 +44,7 @@ public class SelectedTicketsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        presenter.onDestoy();
 
     }
 
