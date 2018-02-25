@@ -1,8 +1,13 @@
 package co.gosalo.androidreview.activities.main.mvp.view.adapter;
 
 
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +69,14 @@ public class EventAdapter  extends RecyclerView.Adapter<EventViewHolder>{
         notifyDataSetChanged();
     }
 
+    private void remove(int swipedPosition) {
+        if(swipedPosition<getItemCount()){
+            events.remove(swipedPosition);
+            notifyItemRemoved(swipedPosition);
+            notifyItemRangeChanged(swipedPosition, events.size());
+        }
+    }
+
     // JUST SEPARATION AMONG THE EVENTS
     public static class SpaceItems extends RecyclerView.ItemDecoration{
 
@@ -79,5 +92,34 @@ public class EventAdapter  extends RecyclerView.Adapter<EventViewHolder>{
             outRect.bottom = spacer;
         }
     }
+
+    // DELETE ROW (EVENT ITEM) BY DRAGGING TO RIGHT
+
+    public static class DeleteItemByDragToRight extends ItemTouchHelper.SimpleCallback{
+
+
+        public DeleteItemByDragToRight() {
+            super(0, ItemTouchHelper.RIGHT);
+        }
+
+        // not important, we don't want drag & drop
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+            int swipedPosition = viewHolder.getAdapterPosition();
+            EventAdapter adapter = (EventAdapter) ((RecyclerView)viewHolder.itemView.getParent()).getAdapter();
+            adapter.remove(swipedPosition);
+        }
+
+    }
+
+
+
+
 }
 

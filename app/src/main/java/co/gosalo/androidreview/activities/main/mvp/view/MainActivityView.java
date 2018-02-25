@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,6 +50,9 @@ public class MainActivityView extends FrameLayout {
         recyclerView.setLayoutManager(layoutManager);
         //          WE ADD SOME SEPARATION AMONG THE EVENTS
         recyclerView.addItemDecoration(new EventAdapter.SpaceItems(30));
+        //          WE ADD FUNCTIONALITY TO DELETE A ITEM BY DRAG TO RIGHT
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(new EventAdapter.DeleteItemByDragToRight());
+        mItemTouchHelper.attachToRecyclerView(recyclerView);
 
 
     }
