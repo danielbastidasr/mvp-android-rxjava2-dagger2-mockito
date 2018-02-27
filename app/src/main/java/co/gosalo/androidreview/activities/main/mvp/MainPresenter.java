@@ -1,15 +1,14 @@
 package co.gosalo.androidreview.activities.main.mvp;
 
 
-import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import co.gosalo.androidreview.activities.main.mvp.view.MainActivityView;
 
 
 import co.gosalo.androidreview.app.api.model.Event;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -22,13 +21,7 @@ public class MainPresenter {
     private final MainActivityView view;
     private final MainModel model;
 
-
     private PublishSubject<Integer> changePage = PublishSubject.create();
-    private int currentPage = 0;
-    private List<Event> events = new ArrayList<>();
-    private boolean last = false;
-
-
     private CompositeDisposable disposableBag = new CompositeDisposable();
 
     public MainPresenter(MainActivityView view, MainModel model) {
@@ -37,60 +30,57 @@ public class MainPresenter {
     }
 
     public void onCreate(){
-
-        view.setUpRecyclerView(events);
-        disposableBag.add(retrieveEventsWhenPageChange());
-        setPage(0);
+        //Initialize the observable
+        setPage(model.getPage());
+        //Initialize retrieve Events from the API
+        disposableBag.add(retrieveEvents());
+        //SetUp Initial State either with SavedState in the Fragment or API Call with the page 0
+        disposableBag.add(getEventsFromSaveStateOrApi());
 
 
     }
+
+
 
     public void onDestroy(){
         disposableBag.dispose();
     }
 
-
-
     public void setPage(Integer page) {
-        currentPage = page;
         changePage.onNext(page);
     }
 
     public void incrementPage(){
-        if(!last){
-            currentPage++;
-            changePage.onNext(currentPage);
+        if(!model.isLast()){
+            changePage.onNext(model.getPage()+1);
         }
 
     }
 
-
-    private Disposable retrieveEventsWhenPageChange() {
-
+    private Disposable retrieveEvents(){
         return changePage.subscribe(
-            (pageNumber) -> {
-                /** IF CURRENT PAGE IS NOT THE LAST ONE **/
-                if(!last){
-                    view.showLoading(true);
-                    disposableBag.add(retrieveEvents(pageNumber));
-                }
+                    page->{
+                        view.showLoading(true);
+                        disposableBag.add(getEventsFromApi(page));
+                    }
+                );
 
-            });
     }
 
-    private Disposable retrieveEvents(int pageNumber){
-        return model.getListEvents(pageNumber)
-                .take(1)
+    private Observable<List<Event>> retrieveEventsPage(int page){
+        return  model.getEvents(page);
+
+    }
+
+    private Disposable getEventsFromApi(int page){
+        return retrieveEventsPage(page)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
+                .doOnNext(events->model.saveEventsState(events))
                 .subscribe(
-                        listPagedResponseBody -> {
-                            last = listPagedResponseBody.isLast();
-                            events.addAll(listPagedResponseBody.getContent());
-                            view.setUpRecyclerView(events);
-                        }
+                        events -> view.setUpRecyclerView(events)
                         ,
-                        err -> {
+                        err ->{
                             /**TODO:Need to pass to the view the different error cases to be displayed in the View**/
                             if(err instanceof HttpException){
                                 HttpException exception = (HttpException) err;
@@ -100,8 +90,35 @@ public class MainPresenter {
                             else view.emptyList();
                             view.showLoading(false);
                         }
+                        , ()->view.showLoading(false)
+                );
+
+    }
+
+
+    private Disposable getEventsFromSaveStateOrApi(){
+        return model.getEventsFromSaveStateOrApi()
+                .toObservable()
+                .take(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        events ->{
+                            model.saveEventsState(events);
+                            view.setUpRecyclerView(events);
+                            view.showLoading(false);
+                        }
                         ,
-                        ()-> view.showLoading(false)
+                        err ->{
+                            /**TODO:Need to pass to the view the different error cases to be displayed in the View**/
+                            if(err instanceof HttpException){
+                                HttpException exception = (HttpException) err;
+                                view.emptyList();
+                            }
+
+                            else view.emptyList();
+                            view.showLoading(false);
+                        }
                 );
     }
 
