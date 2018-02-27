@@ -23,7 +23,6 @@ public class MainModel {
     private static String bundleNameLast = "PAGEISLAST";
 
     //ActualState
-
     private List<Event> events = new ArrayList<>();
     private boolean last = false;
     private int page = 0;
@@ -42,6 +41,7 @@ public class MainModel {
 
     }
 
+    /**INI MODEL STATE**/
     public Single<List<Event>> getEventsFromSaveStateOrApi() {
         return getEventsFromSaveState()
                 .isEmpty().flatMap(
@@ -73,6 +73,7 @@ public class MainModel {
     }
 
 
+    /**GET EVENTS FROM API**/
     public Observable<List<Event>> getEvents(int page){
 
         return getListEvents(page).map(
@@ -86,19 +87,20 @@ public class MainModel {
         );
     }
 
-
-    private Observable<PagedResponseBody<List<Event>>> getListEvents(Integer page){
-         return gosaloService.getEvents(page);
-    }
-
+    /**SAVE MODEL STATE IN BUNDLE**/
     public void saveEventsState(List<Event> list) {
+
         reactiveSaveState.updateSaveState(activity, bundle -> {
+
             bundle.putParcelableArrayList(bundleNameList, (ArrayList<? extends Parcelable>) list);
             bundle.putInt(bundleNamePage,page);
             bundle.putBoolean(bundleNameLast,last);
+
         });
+
     }
 
+    /**GET MODEL STATE FROM THE BUNDLE**/
     public Maybe<List<Event>> getEventsFromSaveState() {
         return reactiveSaveState.getSavedState(activity).map(
                 bundle -> {
@@ -109,13 +111,21 @@ public class MainModel {
         );
     }
 
-
+    /**STATE: IS THE LAST PAGE**/
     public boolean isLast() {
         return last;
     }
 
+    /**STATE: GET THE LAST PAGE**/
     public int getPage() {
         return page;
+    }
+
+
+
+    /**API CALL TO 'GOSALO' SERVICE **/
+    private Observable<PagedResponseBody<List<Event>>> getListEvents(Integer page){
+        return gosaloService.getEvents(page);
     }
 
 }

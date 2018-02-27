@@ -46,25 +46,25 @@ public class MainPresenterTest {
     }
 
     @Test
-    public void onGetEventsNullDataButSavedState(){
-        /*TODO: Create a better test*/
+    public void onGetEventsInitialState(){
 
-        //Given SavedState different than null
+
+        //Given Event From API or Save State
         Mockito.when(mainModel.getEventsFromSaveStateOrApi()).thenReturn(Single.just(mockEvents));
-        //Mockito.when(mainModel.getEvents(0)).thenReturn(Observable.just(mockEvents));
-        //Mockito.when(mainModel.getEventsFromSaveState()).thenReturn(Maybe.empty());
-
 
         //When Presenter Called
         mainPresenter.onCreate();
 
         //Then the following methods should be called
+        Mockito.verify(mainView,Mockito.times(1)).showLoading(true);
         Mockito.verify(mainView,Mockito.times(1)).showLoading(false);
         Mockito.verify(mainView,Mockito.times(1)).setUpRecyclerView(mockEvents);
-
+        Mockito.verifyNoMoreInteractions(mainView);
 
         //At the end we just destroy
         mainPresenter.onDestroy();
+
+
     }
 
 

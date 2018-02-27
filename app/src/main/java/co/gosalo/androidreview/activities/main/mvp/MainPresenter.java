@@ -1,14 +1,9 @@
 package co.gosalo.androidreview.activities.main.mvp;
 
 
-
-import java.util.List;
-
 import co.gosalo.androidreview.activities.main.mvp.view.MainActivityView;
 
 
-import co.gosalo.androidreview.app.api.model.Event;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -30,26 +25,20 @@ public class MainPresenter {
     }
 
     public void onCreate(){
-        //Initialize the observable
-        setPage(model.getPage());
-        //Initialize retrieve Events from the API
-        disposableBag.add(retrieveEvents());
-        //SetUp Initial State either with SavedState in the Fragment or API Call with the page 0
+        //Initialise the observable change page
+        changePage.onNext(model.getPage());
+        //Initialise retrieve more Events
+        disposableBag.add(retrieveEventsWhenPageChanged());
+        //SetUp Initial State
         disposableBag.add(getEventsFromSaveStateOrApi());
 
-
     }
-
-
-
+    /**ON DESTROY ACTIVITY WILL DISPOSE ALL THE SUBSCRIPTIONS**/
     public void onDestroy(){
         disposableBag.dispose();
     }
 
-    public void setPage(Integer page) {
-        changePage.onNext(page);
-    }
-
+    /**USER WILL CALL THIS METHOD ASKING FOR MORE EVENTS**/
     public void incrementPage(){
         if(!model.isLast()){
             changePage.onNext(model.getPage()+1);
@@ -57,7 +46,8 @@ public class MainPresenter {
 
     }
 
-    private Disposable retrieveEvents(){
+    /**SUBSCRIPTION TO GET EVENTS FROM API WHEN USER CHANGED PAGE**/
+    private Disposable retrieveEventsWhenPageChanged(){
         return changePage.subscribe(
                     page->{
                         view.showLoading(true);
@@ -67,16 +57,17 @@ public class MainPresenter {
 
     }
 
-    private Observable<List<Event>> retrieveEventsPage(int page){
-        return  model.getEvents(page);
 
-    }
-
+    /**SUBSCRIPTION TO GET EVENTS FROM API GIVEN A PAGE**/
     private Disposable getEventsFromApi(int page){
-        return retrieveEventsPage(page)
+        return model.getEvents(page)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .doOnNext(events->model.saveEventsState(events))
+                .doOnNext(events->{
+                    view.showLoading(true);
+                    model.saveEventsState(events);
+
+                })
                 .subscribe(
                         events -> view.setUpRecyclerView(events)
                         ,
@@ -96,10 +87,15 @@ public class MainPresenter {
     }
 
 
+    /**SUBSCRIPTION TO GET EVENTS FROM API OR SAVED STATE**/
     private Disposable getEventsFromSaveStateOrApi(){
         return model.getEventsFromSaveStateOrApi()
-                .toObservable()
-                .take(1)
+                .map(
+                        events -> {
+                            view.showLoading(true);
+                            return events;
+                        }
+                )
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(
