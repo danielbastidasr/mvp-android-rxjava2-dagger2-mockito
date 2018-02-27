@@ -1,11 +1,7 @@
 package co.gosalo.androidreview.activities.main.mvp.view.adapter;
 
 
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
@@ -24,7 +20,6 @@ import co.gosalo.androidreview.activities.main.mvp.view.holder.EventViewHolder;
 public class EventAdapter  extends RecyclerView.Adapter<EventViewHolder>{
 
     private List<Event> events;
-
     private MainActivity activity;
 
     public EventAdapter(List<Event> events, MainActivity activity) {
@@ -68,6 +63,8 @@ public class EventAdapter  extends RecyclerView.Adapter<EventViewHolder>{
         this.events = events;
         notifyDataSetChanged();
     }
+
+
 
     private void remove(int swipedPosition) {
         if(swipedPosition<getItemCount()){

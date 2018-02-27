@@ -3,31 +3,25 @@ package co.gosalo.androidreview.activities.main;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-
 import javax.inject.Inject;
-
-import co.gosalo.androidreview.app.DaggerAppComponent;
 import co.gosalo.androidreview.app.GosaloApp;
 import co.gosalo.androidreview.app.Navigator;
-import co.gosalo.androidreview.app.api.GosaloService;
 import co.gosalo.androidreview.activities.main.mvp.MainPresenter;
 import co.gosalo.androidreview.activities.main.mvp.view.MainActivityView;
 import co.gosalo.androidreview.app.api.model.Event;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Inject
-    GosaloService service;
 
     @Inject
     Navigator navigator;
-
 
     @Inject
     MainActivityView activityView;
 
     @Inject
     MainPresenter presenter;
+
 
 
     public void incrementEventsList() {
@@ -37,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         GosaloApp.createMainComponent(this).inject(this);
 
@@ -58,4 +51,5 @@ public class MainActivity extends AppCompatActivity {
     public void startDetailActivity(Event event){
         navigator.navigateToEventDetail(this,event);
     }
+
 }
